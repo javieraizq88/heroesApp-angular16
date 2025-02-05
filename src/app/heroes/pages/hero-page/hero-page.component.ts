@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { delay, switchMap } from 'rxjs';
 
 import { HeroesService } from '../../services/heroes.service';
 import { Hero } from '../../interfaces/hero.interface';
@@ -8,12 +8,11 @@ import { Hero } from '../../interfaces/hero.interface';
 @Component({
   selector: 'app-hero-page',
   templateUrl: './hero-page.component.html',
-  styles: [
-  ]
+  styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent implements OnInit {
 
-  public hero?: Hero;
+  public hero?: Hero; // es opcional pq cuando se muestra null hasta que se haga la peticion http y puede demorarse
 
   constructor(
     private heroesService: HeroesService,
@@ -24,12 +23,12 @@ export class HeroPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
+       // delay(60000),
         switchMap( ({ id }) => this.heroesService.getHeroById( id )),
       )
       .subscribe( hero => {
-
-        if ( !hero ) return this.router.navigate([ '/heroes/list' ]);
-
+       // si el heroe no existe, lo manda a la lista de heroes
+       if ( !hero ) return this.router.navigate([ '/heroes/list' ]); 
         this.hero = hero;
         return;
       })

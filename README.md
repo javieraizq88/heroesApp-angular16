@@ -13,5 +13,5 @@ JSON server -> `npm install --save-dev json-server`
 ## Dev
 
 1) `npm install`
-2) levatnar backend `npm run backend`
-3) `ng serve` -> `http://localhost:4200/`
+2) levantar backend `npm run backend`
+3) levantar frontend `ng serve` -> `http://localhost:4200/`
