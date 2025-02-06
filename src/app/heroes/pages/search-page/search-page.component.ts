@@ -11,12 +11,13 @@ import { HeroesService } from '../../services/heroes.service';
   styles: [
   ]
 })
+
 export class SearchPageComponent {
 
   public searchInput = new FormControl('');
   public heroes: Hero[] = [];
   public selectedHero?: Hero;
-
+ 
   constructor( private heroesService: HeroesService ){}
 
   searchHero() {
@@ -25,7 +26,6 @@ export class SearchPageComponent {
     this.heroesService.getSuggestions( value )
       .subscribe( heroes => this.heroes = heroes );
   }
-
 
   onSelectedOption( event: MatAutocompleteSelectedEvent ): void {
     if ( !event.option.value ) {
@@ -37,8 +37,5 @@ export class SearchPageComponent {
     this.searchInput.setValue( hero.superhero );
 
     this.selectedHero = hero;
-
   }
-
-
 }
