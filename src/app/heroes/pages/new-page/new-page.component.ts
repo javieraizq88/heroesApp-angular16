@@ -91,23 +91,13 @@ export class NewPageComponent implements OnInit {
 
     dialogRef.afterClosed()
       .pipe(
-        filter( (result: boolean) => result ),
-        switchMap( () => this.heroesService.deleteHeroById( this.currentHero.id )),
-        filter( (wasDeleted: boolean) => wasDeleted ),
+        filter( (result: boolean) => result ), // filtro 1 si el heroe existe
+        switchMap( () => this.heroesService.deleteHeroById( this.currentHero.id )), // si es true se manda la eliminacion segun id
+        filter( (wasDeleted: boolean) => wasDeleted ), // si se elimina se da el wasDeleted
       )
       .subscribe(() => {
-        this.router.navigate(['/heroes']);
+        this.router.navigate(['/heroes']); // si se elimina, redirecciona al home
       });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if ( !result ) return;
-
-    //   this.heroesService.deleteHeroById( this.currentHero.id )
-    //   .subscribe( wasDeleted => {
-    //     if ( wasDeleted )
-    //       this.router.navigate(['/heroes']);
-    //   })
-    // });
   }
 
   showSnackbar( message: string ):void {
