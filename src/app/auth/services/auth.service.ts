@@ -28,15 +28,15 @@ export class AuthService {
       );
   }
 
+  // para mantener la sesion del usuario dps de la autentificacion
   checkAuthentication(): Observable<boolean> {
-    if ( !localStorage.getItem('token') ) return of(false);
-
+    if ( !localStorage.getItem('token') ) return of(false); // si el usuario no esta autenticado
     const token = localStorage.getItem('token');
 
     return this.http.get<User>(`${ this.baseUrl }/users/1`)
       .pipe(
-        tap( user => this.user = user ),
-        map( user => !!user ),
+        tap( user => this.user = user ), // establece la propiedad user desde   private user?: User;
+        map( user => !!user ), // el user trae un valor boolean. la doble negacion entrega el true === el usuario si trae informacion
         catchError( err => of(false) )
       );
   }
